@@ -1845,6 +1845,54 @@ static const char *index_html = R"=====(
                 </div>
             </div>
 
+            <!-- --------- Terrain Compensation --------- -->
+            <div class="d-grid gap-2">
+                <button class="btn btn-primary mt-3 toggle-btn" id="terrainConfig" type="button" data-toggle="collapse"
+                    data-target="#collapseTerrainConfig" aria-expanded="false" aria-controls="collapseTerrainConfig">
+                    Terrain Compensation <i class="caret-icon bi icon-caret-down"></i>
+                </button>
+            </div>
+            <div class="collapse" id="collapseTerrainConfig">
+                <div class="card card-body">
+                    <div class="form-check mt-3">
+                        <label class="form-check-label" for="enableTerrainComp">Enable Terrain Compensation</label>
+                        <input class="form-check-input" type="checkbox" value="" id="enableTerrainComp">
+                        <span class="tt" data-bs-placement="right"
+                            title="Use an external BNO086 on Qwiic to compensate NMEA for pole tilt. Default: Disabled">
+                            <span class="icon-info-circle text-primary ms-2"></span>
+                        </span>
+                    </div>
+                    <div class="row mb-3 align-items-center mt-3">
+                        <label for="poleHeightM" class="col-sm-5 col-5 col-form-label">Pole Height (m):</label>
+                        <div class="col-sm-7 col-5">
+                            <input type="text" class="form-control" id="poleHeightM" value="2.0">
+                        </div>
+                    </div>
+                    <div class="row mb-3 align-items-center">
+                        <label for="terrainAttitudeFilterHz" class="col-sm-5 col-5 col-form-label">Attitude Filter (Hz):</label>
+                        <div class="col-sm-7 col-5">
+                            <input type="text" class="form-control" id="terrainAttitudeFilterHz" value="1.0">
+                        </div>
+                    </div>
+                    <div class="row mb-3 align-items-center">
+                        <label for="terrainPositionSmoothTauS" class="col-sm-5 col-5 col-form-label">Position Smooth Tau (s):</label>
+                        <div class="col-sm-7 col-5">
+                            <input type="text" class="form-control" id="terrainPositionSmoothTauS" value="0.3">
+                        </div>
+                    </div>
+                    <div class="row mb-3 align-items-center">
+                        <label for="bno086I2cAddress" class="col-sm-5 col-5 col-form-label">BNO086 I2C Address (hex):</label>
+                        <div class="col-sm-7 col-5">
+                            <input type="text" class="form-control" id="bno086I2cAddress" value="75">
+                        </div>
+                    </div>
+                    <div class="d-grid gap-2 mt-3">
+                        <button class="btn btn-secondary" type="button" id="terrainLevelZeroBtn"
+                            onclick="ws.send('terrainLevelZero,true,');">Level Zero (stationary on flat ground)</button>
+                    </div>
+                </div>
+            </div>
+
             <!-- --------- Point Perfect Config --------- -->
             <div class="d-grid gap-2">
                 <button class="btn btn-primary mt-3 toggle-btn" id="ppConfig" type="button" data-toggle="collapse"

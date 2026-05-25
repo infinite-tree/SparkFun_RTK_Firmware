@@ -340,6 +340,8 @@ void storePVTdata(UBX_NAV_PVT_data_t *ubxDataStruct)
   confirmedTime = ubxDataStruct->flags2.bits.confirmedTime;
 
   pvtUpdated = true;
+
+  applyTerrainComp();
 }
 
 void storeHPdata(UBX_NAV_HPPOSLLH_data_t *ubxDataStruct)
@@ -350,6 +352,8 @@ void storeHPdata(UBX_NAV_HPPOSLLH_data_t *ubxDataStruct)
   latitude += ((double)ubxDataStruct->latHp) / 1000000000.0;
   longitude = ((double)ubxDataStruct->lon) / 10000000.0;
   longitude += ((double)ubxDataStruct->lonHp) / 1000000000.0;
+
+  applyTerrainComp();
 }
 
 //Used during Rover+WiFi NTRIP Client mode to provide caster with GGA sentence every 10 seconds
@@ -359,6 +363,19 @@ void pushGPGGA(NMEA_GGA_data_t *nmeaData)
   //Provide the caster with our current position as needed
   if ((ntripClient.connected() == true) && (settings.ntripClient_TransmitGGA == true))
   {
+#ifdef COMPILE_TERRAIN_COMP
+    if (settings.enableTerrainComp && online.bno086 && terrainCompValid)
+    {
+      char correctedGga[100];
+      if (buildCorrectedGga(correctedGga, sizeof(correctedGga)) == true)
+      {
+        log_d("Pushing corrected GGA to server: %s", correctedGga);
+        ntripClient.print(correctedGga);
+        return;
+      }
+    }
+#endif
+
     log_d("Pushing GGA to server: %s", nmeaData->nmea); //nmea is printable (NULL-terminated) and already has \r\n on the end
 
     ntripClient.print((const char *)nmeaData->nmea); //Push our current GGA sentence to caster

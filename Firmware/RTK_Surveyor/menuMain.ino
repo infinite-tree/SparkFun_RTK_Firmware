@@ -55,6 +55,10 @@ void menuMain()
 
     Serial.println(F("s) System Status"));
 
+#ifdef COMPILE_TERRAIN_COMP
+    Serial.println(F("i) Configure Terrain Compensation"));
+#endif
+
     if (binCount > 0)
       Serial.println(F("f) Firmware upgrade"));
 
@@ -78,6 +82,10 @@ void menuMain()
       menuBluetooth();
     else if (incoming == 's')
       menuSystem();
+#ifdef COMPILE_TERRAIN_COMP
+    else if (incoming == 'i')
+      menuTerrain();
+#endif
     else if (incoming == 'p')
       menuUserProfiles();
     else if (incoming == 'P' && online.lband == true)

@@ -393,6 +393,14 @@ void createSettingsString(char* settingsCSV)
   stringRecord(settingsCSV, "enableSensorFusion", settings.enableSensorFusion);
   stringRecord(settingsCSV, "autoIMUmountAlignment", settings.autoIMUmountAlignment);
 
+  stringRecord(settingsCSV, "enableTerrainComp", settings.enableTerrainComp);
+  stringRecord(settingsCSV, "poleHeightM", settings.poleHeightM);
+  stringRecord(settingsCSV, "terrainRollOffsetDeg", settings.terrainRollOffsetDeg);
+  stringRecord(settingsCSV, "terrainPitchOffsetDeg", settings.terrainPitchOffsetDeg);
+  stringRecord(settingsCSV, "terrainAttitudeFilterHz", settings.terrainAttitudeFilterHz);
+  stringRecord(settingsCSV, "terrainPositionSmoothTauS", settings.terrainPositionSmoothTauS);
+  stringRecord(settingsCSV, "bno086I2cAddress", settings.bno086I2cAddress);
+
   //System Config
   stringRecord(settingsCSV, "enableLogging", settings.enableLogging);
   stringRecord(settingsCSV, "maxLogTime_minutes", settings.maxLogTime_minutes);
@@ -508,6 +516,22 @@ void updateSettingWithValue(const char *settingName, const char* settingValueStr
     settings.autoIMUmountAlignment = settingValueBool;
   else if (strcmp(settingName, "enableSensorFusion") == 0)
     settings.enableSensorFusion = settingValueBool;
+  else if (strcmp(settingName, "enableTerrainComp") == 0)
+    settings.enableTerrainComp = settingValueBool;
+  else if (strcmp(settingName, "poleHeightM") == 0)
+    settings.poleHeightM = settingValue;
+  else if (strcmp(settingName, "terrainRollOffsetDeg") == 0)
+    settings.terrainRollOffsetDeg = settingValue;
+  else if (strcmp(settingName, "terrainPitchOffsetDeg") == 0)
+    settings.terrainPitchOffsetDeg = settingValue;
+  else if (strcmp(settingName, "terrainAttitudeFilterHz") == 0)
+    settings.terrainAttitudeFilterHz = settingValue;
+  else if (strcmp(settingName, "terrainPositionSmoothTauS") == 0)
+    settings.terrainPositionSmoothTauS = settingValue;
+  else if (strcmp(settingName, "bno086I2cAddress") == 0)
+    settings.bno086I2cAddress = settingValue;
+  else if (strcmp(settingName, "terrainLevelZero") == 0)
+    terrainCompLevelZero();
   else if (strcmp(settingName, "enableResetDisplay") == 0)
     settings.enableResetDisplay = settingValueBool;
 

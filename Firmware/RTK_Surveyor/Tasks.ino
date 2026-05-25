@@ -40,6 +40,11 @@ void F9PSerialReadTask(void *e)
     {
       auto s = serialGNSS.readBytes(rBuffer, sizeof(rBuffer));
 
+#ifdef COMPILE_TERRAIN_COMP
+      if (settings.enableTerrainComp && online.bno086)
+        patchNmeaBuffer(rBuffer, s);
+#endif
+
       //If we are actively survey-in then do not pass NMEA data from ZED to phone
       if (systemState == STATE_BASE_TEMP_SETTLE || systemState == STATE_BASE_TEMP_SURVEY_STARTED)
       {

@@ -85,7 +85,11 @@ This slot accepts standard microSD cards up to 32GB formatted for FAT16 or FAT32
 
 ### Qwiic
 
-This 4-pin [Qwiic connector](https://www.sparkfun.com/qwiic) exposes the I2C bus of the ESP32 WROOM module. Currently, there is no firmware support for adding I2C devices to the RTK Surveyor but support may be added in the future.
+This 4-pin [Qwiic connector](https://www.sparkfun.com/qwiic) exposes the I2C bus of the ESP32 WROOM module (SDA GPIO 21, SCL GPIO 22).
+
+Firmware supports an optional [SparkFun VR IMU Breakout BNO086 (Qwiic)](https://www.sparkfun.com/products/22857) for terrain compensation. In addition to the Qwiic cable, wire **INT** to **GPIO 18** and **RST** to **GPIO 19** on the ESP32 (Surveyor, Express, and Express Plus use these defaults). Enable the feature in the serial menu (`i) Configure Terrain Compensation`) or WiFi AP config, set pole height in meters, and run **Level Zero** on flat ground before field use.
+
+The BNO086 default I2C address is **0x4B** (alternate **0x4A** if the ADR jumper is closed). It shares the bus with the ZED-F9P (`0x42`) and fuel gauge (`0x36`) without address conflicts.
 
 [![RTK Surveyor Qwiic connector](https://cdn.sparkfun.com/assets/learn_tutorials/1/4/6/3/SparkFun_RTK_Surveyor_-_Connectors_-_Qwiic.jpg)](https://cdn.sparkfun.com/assets/learn_tutorials/1/4/6/3/SparkFun_RTK_Surveyor_-_Connectors_-_Qwiic.jpg)
 

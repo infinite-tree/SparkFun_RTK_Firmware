@@ -22,8 +22,14 @@ void menuSystem()
     else Serial.println(F("Offline"));
 
     Serial.print(F("Accelerometer: "));
-    if (online.display == true) Serial.println(F("Online"));
+    if (online.accelerometer == true) Serial.println(F("Online"));
     else Serial.println(F("Offline"));
+
+#ifdef COMPILE_TERRAIN_COMP
+    Serial.print(F("BNO086: "));
+    if (online.bno086 == true) Serial.println(F("Online"));
+    else Serial.println(F("Offline"));
+#endif
 
     Serial.print(F("Fuel Gauge: "));
     if (online.battery == true)
@@ -351,6 +357,18 @@ void printCurrentConditions()
 
     Serial.print(", Altitude (m): ");
     Serial.print(altitude, 1);
+
+#ifdef COMPILE_TERRAIN_COMP
+    if (settings.enableTerrainComp && terrainCompValid)
+    {
+      Serial.print(F(" | TC Lat: "));
+      Serial.print(correctedLatitude, 9);
+      Serial.print(F(", TC Lon: "));
+      Serial.print(correctedLongitude, 9);
+      Serial.print(F(", TC Alt: "));
+      Serial.print(correctedAltitude, 1);
+    }
+#endif
 
     Serial.println();
   }

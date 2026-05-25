@@ -28,6 +28,7 @@ const int FIRMWARE_VERSION_MINOR = 2;
 #define COMPILE_WIFI //Comment out to remove WiFi functionality
 #define COMPILE_BT //Comment out to remove Bluetooth functionality
 #define COMPILE_AP //Comment out to remove Access Point functionality
+#define COMPILE_TERRAIN_COMP //Comment out to remove BNO086 terrain compensation
 //#define ENABLE_DEVELOPER //Uncomment this line to enable special developer modes (don't check power button at startup)
 
 //Define the RTK board identifier:
@@ -40,6 +41,7 @@ const int FIRMWARE_VERSION_MINOR = 2;
 #define RTK_IDENTIFIER (FIRMWARE_VERSION_MAJOR * 0x10 + FIRMWARE_VERSION_MINOR)
 
 #include "settings.h"
+#include "TerrainComp.h"
 
 //Hardware connections
 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -71,6 +73,11 @@ int pin_radio_rst;
 int pin_radio_pwr;
 int pin_radio_cts;
 int pin_radio_rts;
+
+#ifdef COMPILE_TERRAIN_COMP
+int pin_bno086_int = -1;
+int pin_bno086_rst = -1;
+#endif
 
 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
@@ -451,6 +458,8 @@ void setup()
   Wire.begin(); //Start I2C on core 1
   //Wire.setClock(400000);
 
+  beginI2cMutex();
+
   beginGNSS(); //Connect to GNSS to get module type
 
   beginFS(); //Start file system for settings
@@ -472,6 +481,10 @@ void setup()
   configureGNSS(); //Configure ZED module
 
   beginAccelerometer();
+
+#ifdef COMPILE_TERRAIN_COMP
+  beginBNO086();
+#endif
 
   beginLBand();
 

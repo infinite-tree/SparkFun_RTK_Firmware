@@ -43,6 +43,11 @@ void beginBoard()
     pin_zed_reset = 27;
     pin_batteryLevel_alert = 36;
 
+#ifdef COMPILE_TERRAIN_COMP
+    pin_bno086_int = 18;
+    pin_bno086_rst = 19;
+#endif
+
     //Bug in ZED-F9P v1.13 firmware causes RTK LED to not light when RTK Floating with SBAS on.
     //The following changes the POR default but will be overwritten by settings in NVM or settings file
     settings.ubxConstellations[1].enabled = false;
@@ -70,6 +75,11 @@ void beginBoard()
     }
 
     pinMode(pin_setupButton, INPUT_PULLUP);
+
+#ifdef COMPILE_TERRAIN_COMP
+    pin_bno086_int = 18;
+    pin_bno086_rst = 19;
+#endif
 
     setMuxport(settings.dataPortChannel); //Set mux to user's choice: NMEA, I2C, PPS, or DAC
 
@@ -119,6 +129,11 @@ void beginBoard()
     //CTS is active low. ESP32 pin 5 has pullup at POR. We must drive it low.
     pinMode(pin_radio_cts, OUTPUT);
     digitalWrite(pin_radio_cts, LOW);
+
+#ifdef COMPILE_TERRAIN_COMP
+    pin_bno086_int = 18;
+    pin_bno086_rst = 19;
+#endif
 
     if (productVariant == RTK_FACET)
     {

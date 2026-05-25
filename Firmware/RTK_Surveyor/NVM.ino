@@ -204,6 +204,13 @@ void recordSystemSettingsToFile(File * settingsFile)
   settingsFile->printf("%s=%d\n\r", F("updateZEDSettings"), settings.updateZEDSettings);
   settingsFile->printf("%s=%d\n\r", F("LBandFreq"), settings.LBandFreq);
   settingsFile->printf("%s=%d\n\r", F("enableBLE"), settings.enableBLE);
+  settingsFile->printf("%s=%d\n\r", F("enableTerrainComp"), settings.enableTerrainComp);
+  settingsFile->printf("%s=%0.3f\n\r", F("poleHeightM"), settings.poleHeightM);
+  settingsFile->printf("%s=%0.3f\n\r", F("terrainRollOffsetDeg"), settings.terrainRollOffsetDeg);
+  settingsFile->printf("%s=%0.3f\n\r", F("terrainPitchOffsetDeg"), settings.terrainPitchOffsetDeg);
+  settingsFile->printf("%s=%0.3f\n\r", F("terrainAttitudeFilterHz"), settings.terrainAttitudeFilterHz);
+  settingsFile->printf("%s=%0.3f\n\r", F("terrainPositionSmoothTauS"), settings.terrainPositionSmoothTauS);
+  settingsFile->printf("%s=%d\n\r", F("bno086I2cAddress"), settings.bno086I2cAddress);
 
   //Record constellation settings
   for (int x = 0 ; x < MAX_CONSTELLATIONS ; x++)
@@ -734,6 +741,20 @@ bool parseLine(char* str, Settings *settings)
   }
   else if (strcmp(settingName, "LBandFreq") == 0)
     settings->LBandFreq = d;
+  else if (strcmp(settingName, "enableTerrainComp") == 0)
+    settings->enableTerrainComp = d;
+  else if (strcmp(settingName, "poleHeightM") == 0)
+    settings->poleHeightM = d;
+  else if (strcmp(settingName, "terrainRollOffsetDeg") == 0)
+    settings->terrainRollOffsetDeg = d;
+  else if (strcmp(settingName, "terrainPitchOffsetDeg") == 0)
+    settings->terrainPitchOffsetDeg = d;
+  else if (strcmp(settingName, "terrainAttitudeFilterHz") == 0)
+    settings->terrainAttitudeFilterHz = d;
+  else if (strcmp(settingName, "terrainPositionSmoothTauS") == 0)
+    settings->terrainPositionSmoothTauS = d;
+  else if (strcmp(settingName, "bno086I2cAddress") == 0)
+    settings->bno086I2cAddress = d;
   else if (strcmp(settingName, "enableBLE") == 0)
     settings->enableBLE = d;
 

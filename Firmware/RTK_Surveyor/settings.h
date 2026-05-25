@@ -385,6 +385,14 @@ typedef struct {
   uint64_t lastKeyAttempt = 0; //Epoch time of last attempt at obtaining keys
   bool updateZEDSettings = true; //When in doubt, update the ZED with current settings
   uint32_t LBandFreq = 1556290000; //Default to US band
+
+  bool enableTerrainComp = false;
+  float poleHeightM = 2.0f;
+  float terrainRollOffsetDeg = 0.0f;
+  float terrainPitchOffsetDeg = 0.0f;
+  float terrainAttitudeFilterHz = 1.0f;
+  float terrainPositionSmoothTauS = 0.3f;
+  uint8_t bno086I2cAddress = 0x4B;
 } Settings;
 Settings settings;
 
@@ -402,4 +410,5 @@ struct struct_online {
   bool ntripClient = false;
   bool lband = false;
   bool lbandCorrections = false;
+  bool bno086 = false;
 } online;
